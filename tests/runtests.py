@@ -186,6 +186,9 @@ TEST_SUITES_UNORDERED = {
     'logging':
         {'display_name': 'Logging',
          'path': 'integration/logging'},
+    'utils':
+       {'display_name': 'Utils',
+        'path': 'integration/utils'},
 }
 
 TEST_SUITES = collections.OrderedDict(sorted(TEST_SUITES_UNORDERED.items(),
@@ -527,6 +530,14 @@ class SaltTestsuiteParser(SaltCoverageTestingParser):
             default=False,
             help='Run logging integration tests'
         )
+        self.test_selection_group.add_option(
+            '--utils',
+            dest='utils',
+            action='store_true',
+            default=False,
+            help='Run utils integration tests'
+        )
+
 
     def validate_options(self):
         if self.options.cloud_provider or self.options.external_api:

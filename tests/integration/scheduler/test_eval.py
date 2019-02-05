@@ -8,8 +8,6 @@ import logging
 import os
 import random
 import time
-
-import dateutil.parser as dateutil_parser
 import datetime
 
 # Import Salt Testing libs
@@ -26,6 +24,12 @@ import salt.utils.schedule
 import salt.utils.platform
 
 from salt.modules.test import ping as ping
+
+try:
+    import dateutil.parser as dateutil_parser
+    HAS_DATEUTIL = True
+except ImportError:
+    HAS_DATEUTIL = False
 
 try:
     import croniter  # pylint: disable=W0611
@@ -45,6 +49,7 @@ DEFAULT_CONFIG['pki_dir'] = os.path.join(ROOT_DIR, 'pki')
 DEFAULT_CONFIG['cachedir'] = os.path.join(ROOT_DIR, 'cache')
 
 
+@skipIf(not HAS_DATEUTIL, "python-dateutil needed for tests")
 class SchedulerEvalTest(ModuleCase, SaltReturnAssertsMixin):
     '''
     Validate the pkg module

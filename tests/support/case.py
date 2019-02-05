@@ -184,6 +184,10 @@ class ShellTestCase(TestCase, AdaptedConfigurationTestCaseMixin):
             self.get_config_file_path('master')
         )
 
+        if 'async' in kwargs:
+            opts['async'] = True
+            kwargs.pop('async')
+
         opts_arg = list(arg)
         if kwargs:
             opts_arg.append({'__kwarg__': True})
@@ -568,6 +572,11 @@ class ShellCase(ShellTestCase, AdaptedConfigurationTestCaseMixin, ScriptPathMixi
         opts = {}
         opts.update(self.get_config('client_config', from_scratch=from_scratch))
         opts_arg = list(arg)
+
+        if 'async' in kwargs:
+            opts['async'] = True
+            kwargs.pop('async')
+
         if kwargs:
             opts_arg.append({'__kwarg__': True})
             opts_arg[-1].update(kwargs)
